@@ -7,6 +7,11 @@ public class StartLevel : MonoBehaviour
     [SerializeField] private PlayerMovement _playerMovement;
 
     public bool LevelStarted { get; private set; }
+
+    private void Start()
+    {
+        LevelStarted = false;
+    }
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
