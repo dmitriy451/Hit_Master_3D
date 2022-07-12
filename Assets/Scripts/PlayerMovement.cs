@@ -5,19 +5,18 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(PlayerWin))]
 [RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(Animator))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Transform[] _waypoints;
     [SerializeField] private Level[] _levels;
     [SerializeField] private float _stopDistance;
+    [SerializeField] private Animator _animator;
+
     private PlayerWin _playerWin;
-    private Animator _animator;
     private NavMeshAgent _agent;
 
     private void Start()
     {
-        _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
         _playerWin = GetComponent<PlayerWin>();
 
@@ -61,6 +60,8 @@ public class PlayerMovement : MonoBehaviour
         else
         {
         _animator.SetBool("Running", true);
+            _animator.transform.localPosition = new Vector3(0,0,0);
+            _animator.transform.localRotation = new Quaternion(0,0,0,0);
         }
 
     }

@@ -24,7 +24,7 @@ public class PlayerShooting : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-            Vector3 point = ray.GetPoint(100);
+            Vector3 point = ray.GetPoint(60);
             if (Physics.Raycast(ray,out RaycastHit hit))
             {
                 point = hit.point;
