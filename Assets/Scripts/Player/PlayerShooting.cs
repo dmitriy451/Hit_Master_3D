@@ -9,6 +9,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private int _poolCount;
     [SerializeField] private bool _autoExpand;
     [SerializeField] private Bullet _bulletPrefab;
+    [SerializeField] private StartLevel _startLevel;
 
     private Pool<Bullet> _pool;
     private Camera _mainCamera;
@@ -21,7 +22,7 @@ public class PlayerShooting : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && _startLevel.LevelStarted)
         {
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             Vector3 point = ray.GetPoint(60);
