@@ -7,17 +7,46 @@ using UnityEngine.AI;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Transform[] _waypoints;
-
+    [SerializeField] private Level[] _levels;
     private NavMeshAgent _agent;
 
     private void Start()
     {
+        transform.position = _waypoints[0].position;
+
         _agent = GetComponent<NavMeshAgent>();
-        //MoveToWaypoint(_waypoints[1]);
-        //MoveToWaypoint(_waypoints[2]);
+
     }
-    void MoveToWaypoint (Transform waypoint)
+    private void OnEnable()
     {
-        _agent.SetDestination(waypoint.transform.position);
+        foreach (var level in _levels)
+        {
+            level.levelPassed += OnLevelPassed;
+        }
+    }
+
+    private void OnDisable()
+    {
+        foreach (var level in _levels)
+        {
+            level.levelPassed -= OnLevelPassed;
+        }
+    }
+
+    private void OnLevelPassed(int level)
+    {
+        if (level== _levels.Length-1)
+        {
+            //рестарт сцены
+        }
+        MoveToNextLevel(level + 1);
+    }
+    public void GoToFirstLevel()
+    {
+        MoveToNextLevel(1);
+    }
+    private void MoveToNextLevel (int nextLevel)
+    {
+        _agent.SetDestination(_waypoints[nextLevel].transform.position);
     }
 }

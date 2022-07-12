@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private int _speed;
     [SerializeField] private int _lifetime;
+    [SerializeField] private int _attackPower;
 
     private Vector3 _target;
 
@@ -37,6 +38,10 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.TryGetComponent(out Enemy enemy))
+        {
+            enemy.TakeDamage(_attackPower);
+        }
         gameObject.SetActive(false);
     }
     
