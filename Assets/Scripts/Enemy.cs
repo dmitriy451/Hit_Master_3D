@@ -3,17 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(Animator))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private int _health;
+    [SerializeField] private Rigidbody[] _ragdollRigidbodies;
+    
     public event UnityAction<int> DamageTaken;
     
+    private Animator _animator;
     private Camera _mainCamera;
     
     void Start()
     {
+        _animator = GetComponent<Animator>();
         _mainCamera = Camera.main;
-        //поставить анимацию стояния
+
+        foreach (var rigibody in _ragdollRigidbodies)
+        {
+            rigibody.isKinematic = true;
+        }
     }
     private void Update()
     {
@@ -31,8 +40,12 @@ public class Enemy : MonoBehaviour
 
     private void Death()
     {
+        _animator.enabled = false;
+        foreach (var rigibody in _ragdollRigidbodies)
+        {
+            rigibody.isKinematic = false;
+        }
         RemoveEnemyFromPassingList();
-        Destroy(gameObject);
     }
 
     private void RemoveEnemyFromPassingList()

@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+
 [RequireComponent(typeof(Enemy))]
 public class EnemyView : MonoBehaviour
 {
